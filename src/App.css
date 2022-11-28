@@ -1,0 +1,9 @@
+body {
+  width: 100vw;
+  background-color: bisque;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+}
