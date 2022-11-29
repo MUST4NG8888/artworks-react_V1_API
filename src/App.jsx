@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import getData from "./utility/getData";
 import Gallery from "./components/Gallery.jsx";
+import Menubar from './components/Menubar.jsx'
 
 function App() {
   
@@ -741,7 +742,9 @@ function App() {
     init();
   }, []);
 
-  return <>{data && <Gallery data={data} />}</>;
+  return <>
+  <Menubar />
+  {data && <Gallery data={data} />}</>;
 }
 
 export default App;
