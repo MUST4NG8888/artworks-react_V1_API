@@ -26,11 +26,13 @@ function Gallery({ data }) {
           <ImageListItem>
             <img
               src={`${item.image}?w=248&fit=crop&auto=format`}
-              // srcSet={`${item.title}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
               alt={item.title}
               loading="lazy"
             />
             <ImageListItemBar position="below" title={item.title} />
+            <ImageListItemBar position="below" title={item.artistName} />
+            <ImageListItemBar position="below" title={item.completitionYear} />
           </ImageListItem>
         ))}
       </ImageList>
