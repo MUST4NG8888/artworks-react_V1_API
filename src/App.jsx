@@ -21,14 +21,14 @@ function App() {
     init();
   }, []);
 
-  const getArtsByPainterId = async (artist) => {
+  const getArtsByPainterId = async (id) => {
     setIsOn(!isOn);
    
     const url = "http://localhost:3333/pba";
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(artist),
+      body: JSON.stringify(id),
     });
     
     const artistPaintings = await response.json();
@@ -36,15 +36,13 @@ function App() {
     setIsOn(false);
   };
 
-  const getArtsByKeyWord = async (keyword) => {
+  const getArtsByKeyWord = async (term) => {
     setIsOn(!isOn);
-
-    console.log(keyword)    
     const url = "http://localhost:3333/pbsearch";
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(keyword),
+      body: JSON.stringify({term}),
     });
     
     const searchTerm = await response.json();

@@ -72,7 +72,6 @@ function ResponsiveAppBar({ artists, onChange, onInput }) {
                 onInput(newInputValue)
               }}
               freeSolo
-              id="free-solo-2-demo"
               size="small"
               disableClearable
               options={options.sort(

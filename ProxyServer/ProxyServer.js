@@ -63,7 +63,7 @@ app.post("/pba", (req, res) => {
 app.post("/pbsearch", (req, res) => {
   
 
-  const searchTerm = req.body.keyword;
+  const searchTerm = req.body.term;
   console.log(searchTerm);
   const getPbSearch = async () => {
     paintingsBySearch = await fetch(
