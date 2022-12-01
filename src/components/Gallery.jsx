@@ -2,8 +2,10 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import ImageList from "@mui/material/ImageList";
+import ImageListItemBar from '@mui/material/ImageListItemBar';
 import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
+import IconButton from '@mui/material/IconButton';
+import Favorite from '@mui/icons-material/FavoriteBorder';
 
 import styles from "./Gallery.module.css";
 
@@ -18,10 +20,13 @@ const Label = styled(Paper)(({ theme }) => ({
 }));
 
 function Gallery({ data }) {
+  
+
+  
   return (
+
     <div id={styles.wrapper}>
-      {console.log(data)}
-      <ImageList variant="masonry" cols={4} gap={25}>
+      <ImageList   variant="masonry" cols={4} gap={20}>
         {data.map((item, index) => (
           <ImageListItem>
             <img
@@ -30,14 +35,32 @@ function Gallery({ data }) {
               alt={item.title}
               loading="lazy"
             />
-            <ImageListItemBar position="below" title={item.title} />
-            <ImageListItemBar position="below" title={item.artistName} />
-            <ImageListItemBar position="below" title={item.completitionYear} />
+             <ImageListItemBar
+              sx={{
+                background:
+                  'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+                  'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+              }}
+              // title="Add to Favourite"
+              position="top"
+              actionIcon={
+                <IconButton
+                  sx={{ color: 'white' }}
+                  aria-label={`star ${item.title}`}
+                >
+                  <Favorite />
+                </IconButton>
+              }
+              actionPosition="right"
+            />
+            <h3>{item.title}</h3>
+            <h5>{item.artistName}</h5>
+            <h6>{item.completitionYear}</h6>
           </ImageListItem>
         ))}
       </ImageList>
     </div>
-  );
+      );
 }
 
 export default Gallery;
