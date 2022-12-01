@@ -10,6 +10,7 @@ function App() {
   const [data, setData] = useState([]);
   const [artists, setArtists] = useState(null);
   const [isOn, setIsOn] = useState(false);
+  // const [tags, setTags] = useState();
 
   console.log(data);
 

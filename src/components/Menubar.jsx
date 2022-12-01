@@ -45,15 +45,8 @@ function ResponsiveAppBar({ artists, onChange, onInput }) {
     };
   });
 
-
-
   const [value, setValue] = React.useState(options[0]);
   const [inputValue, setInputValue] = React.useState("");
-
-
-
-
-
 
   return (
     <AppBar position="sticky">
@@ -95,7 +88,7 @@ function ResponsiveAppBar({ artists, onChange, onInput }) {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src="" />
               </IconButton>
             </Tooltip>
             <Menu

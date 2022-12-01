@@ -2,12 +2,12 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import ImageList from "@mui/material/ImageList";
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import ImageListItem from "@mui/material/ImageListItem";
-import IconButton from '@mui/material/IconButton';
-import Favorite from '@mui/icons-material/FavoriteBorder';
-
+import GalleryCard from './GalleryCard.jsx'
 import styles from "./Gallery.module.css";
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import Chip from '@mui/material/Chip';
+
 
 const Label = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -21,45 +21,69 @@ const Label = styled(Paper)(({ theme }) => ({
 
 function Gallery({ data }) {
   
+  const top100Films = [
+    { title: 'The Shawshank Redemption', year: 1994 },
+    { title: 'The Godfather', year: 1972 },
+    { title: 'The Godfather: Part II', year: 1974 },
+    { title: 'The Dark Knight', year: 2008 },
+    { title: '12 Angry Men', year: 1957 },
+    { title: "Schindler's List", year: 1993 },
+    { title: 'Pulp Fiction', year: 1994 }
+]
 
-  
+const clickHandler = (item) => {
+  setItem(item)
+  setMakeLarge(!makeLarge);
+  console.log('clickHandler log',item);
+}
+
+
+const [makeLarge, setMakeLarge] = React.useState(false);
+const [item, setItem] = React.useState([]);
   return (
+    <>
+      <div id={styles.wrapper}>
+        <ImageList   variant="masonry" cols={4} gap={20}>
+          {data.map((item, index) => (
+            <GalleryCard 
+            clickHandler={clickHandler}
+            item={item} key={index}/>
+          ))}
+        </ImageList>
+      </div>
 
-    <div id={styles.wrapper}>
-      <ImageList   variant="masonry" cols={4} gap={20}>
-        {data.map((item, index) => (
-          <ImageListItem>
-            <img
-              src={`${item.image}?w=248&fit=crop&auto=format`}
-              srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
-              loading="lazy"
-            />
-             <ImageListItemBar
-              sx={{
-                background:
-                  'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-                  'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-              }}
-              // title="Add to Favourite"
-              position="top"
-              actionIcon={
-                <IconButton
-                  sx={{ color: 'white' }}
-                  aria-label={`star ${item.title}`}
-                >
-                  <Favorite />
-                </IconButton>
-              }
-              actionPosition="right"
-            />
-            <h3>{item.title}</h3>
-            <h5>{item.artistName}</h5>
-            <h6>{item.completitionYear}</h6>
-          </ImageListItem>
-        ))}
-      </ImageList>
-    </div>
+      <div id="modal">
+          <img src={item ? '' : item.image} alt="" />
+          <h3>{item ? "" : item.title}</h3>
+          <h5>{item ? '' : item.artistName}</h5>
+          <h6>{item ? '' : item.completitionYear}</h6>
+          <Autocomplete
+            multiple
+            id="tags-filled"
+            options={top100Films.map((option) => option.title)}
+            defaultValue={[top100Films[1].title]}
+            freeSolo
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                  variant="outlined"
+                  label={option}
+                  {...getTagProps({ index })}
+                />
+              ))
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="filled"
+                label="freeSolo"
+                placeholder="Favorites"
+              />
+            )}
+          />
+        </div>
+    </>
+    
       );
 }
 
