@@ -7,7 +7,9 @@ import ImageListItem from "@mui/material/ImageListItem";
 import IconButton from '@mui/material/IconButton';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
+import { StyledEngineProvider } from '@mui/material/styles';
 import styles from "./GalleryCard.module.css";
+import { style } from "@mui/system";
 
 
 const GalleryCard = ({item, clickHandler}) => {
@@ -18,7 +20,9 @@ const GalleryCard = ({item, clickHandler}) => {
       }
 
     return (
-        <ImageListItem>
+        <StyledEngineProvider injectFirst>
+        <ImageListItem id={styles.picturecard}>
+          <div id={styles.container}>
           <img
             onClick={() => clickHandler(item)}
             src={`${item.image}?w=248&fit=crop&auto=format`}
@@ -27,19 +31,15 @@ const GalleryCard = ({item, clickHandler}) => {
             loading="lazy"
           />
           <ImageListItemBar
-            sx={{
-              background:
-                "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, " +
-                "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
-            }}
-            // title="Add to Favourite"
+           id={styles.topbar}
+            title={favorite ? "Remove from Favourite" : "Add to Favourite" }
             position="top"
             actionIcon={
               favorite ? (
                 <IconButton
                   className="icon"
                   onClick={() => favoriteHandler()}
-                  sx={{ color: "white" }}
+                  sx={{ color: "orangered" }}
                   aria-label={`star ${item.title}`}
                 >
                   <Favorite />
@@ -57,10 +57,12 @@ const GalleryCard = ({item, clickHandler}) => {
             }
             actionPosition="right"
           />
-          <h3>{item.title}</h3>
-          <h5>{item.artistName}</h5>
-          <h6>{item.completitionYear}</h6>
+          </div>
+          <h2>{item.title}</h2>
+          <h4>{item.artistName}</h4>
+          <h5>{item.completitionYear}</h5>
         </ImageListItem>
+        </StyledEngineProvider>
     );
 }
  

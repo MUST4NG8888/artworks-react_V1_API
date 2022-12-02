@@ -25,6 +25,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/artists", (req, res) => {
+  
   const getArtists = async (token) => {
     let artistResponse = null;
     if (token !== undefined) {
@@ -45,6 +46,69 @@ app.get("/artists", (req, res) => {
   };
 
   getArtists();
+
+
+
+// function paginated_fetch(
+//   url = 'https://www.wikiart.org/en/api/2/UpdatedArtists', // Improvised required argument in JS
+//   page = "",
+//   previousResponse = []
+// ) {
+//   return fetch(`${url}?paginationToken=${page}`) // Append the page number to the base URL
+//     .then(response => response.json())
+//     .then(newResponse => {
+//       const response = [...previousResponse.data, ...newResponse.data]; // Combine the two arrays
+
+//       if (newResponse.hasMore) {
+//         page == newResponse.paginationToken
+
+//         return paginated_fetch(url, page, response);
+//       }
+
+//       res.json(response)
+//     });
+// }
+// paginated_fetch()
+
+
+// const fetchAllPages = (url) => fetch (url)
+//   .then (res => res .json ())
+//   .then (
+//     ({items, continuationToken: token}) => token
+//       ? fetchAllPages (addToken (url, token)) .then (newItems => [...items, ...newItems])
+//       : items
+//   )
+
+//   fetchAllPages('https://www.wikiart.org/en/api/2/UpdatedArtists?')
+
+
+
+// async function fetchRequest(url) {
+//   try {
+//     // Fetch request and parse as JSON
+//     const response = await fetch(url);
+//     let data = await response.json();
+//     console.log(data)
+//     // Extract the url of the response's "next" relational Link header
+//     let next_page;
+//     if( data.hasMore)
+//         next_page = `https://www.wikiart.org/en/api/2/UpdatedArtists?paginationToken=${data.paginationToken}`;
+
+//     // If another page exists, merge it into the array
+//     // Else return the complete array of paginated output
+//     if (data.hasMore) {
+//       let temp_data = await fetchRequest(next_page); 
+//       data = data.data.concat(temp_data);
+//     }
+  
+//     res.json(data);
+//   } catch (err) {
+//     return console.error(err);
+//   }
+// }
+
+// fetchRequest(`https://www.wikiart.org/en/api/2/UpdatedArtists`)
+
 });
 
 app.post("/pba", (req, res) => {

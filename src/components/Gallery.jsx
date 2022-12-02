@@ -7,7 +7,7 @@ import styles from "./Gallery.module.css";
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Chip from '@mui/material/Chip';
-
+import { StyledEngineProvider } from '@mui/material/styles';
 
 const Label = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -37,19 +37,20 @@ const clickHandler = (item) => {
   console.log('clickHandler log',item);
 }
 
-
 const [makeLarge, setMakeLarge] = React.useState(false);
 const [item, setItem] = React.useState([]);
   return (
     <>
       <div id={styles.wrapper}>
-        <ImageList   variant="masonry" cols={4} gap={20}>
+      <StyledEngineProvider injectFirst>
+        <ImageList id={styles.gallery}  variant="masonry" cols={4} gap={15} >
           {data.map((item, index) => (
             <GalleryCard 
             clickHandler={clickHandler}
             item={item} key={index}/>
           ))}
         </ImageList>
+        </StyledEngineProvider>
       </div>
 
       <div id="modal">
@@ -57,7 +58,7 @@ const [item, setItem] = React.useState([]);
           <h3>{item ? "" : item.title}</h3>
           <h5>{item ? '' : item.artistName}</h5>
           <h6>{item ? '' : item.completitionYear}</h6>
-          <Autocomplete
+          {/* <Autocomplete
             multiple
             id="tags-filled"
             options={top100Films.map((option) => option.title)}
@@ -80,7 +81,7 @@ const [item, setItem] = React.useState([]);
                 placeholder="Favorites"
               />
             )}
-          />
+          /> */}
         </div>
     </>
     
