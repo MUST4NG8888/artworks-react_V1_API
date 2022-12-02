@@ -4,10 +4,10 @@ const getArtists = async () => {
   const response = await fetch(
     `http://localhost:3333/artists`
   );
-  const artist = await response.json();
-  console.log('from getArtists: ', artist);
+  const artists = await response.json();
   
-  return artist
+  console.log(artists);
+  return artists
   };
   
   export default getArtists;

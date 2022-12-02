@@ -31,9 +31,10 @@ function ResponsiveAppBar({ artists, onChange, onInput }) {
     setAnchorElUser(null);
   };
   
-  const options = artists.map((option) => {
+  const options = artists.map((option, index) => {
     const firstLetter = option.artistName[0].toUpperCase();
     return {
+      indexOfArtist: index,
       firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
       ...option,
     };
@@ -55,6 +56,7 @@ function ResponsiveAppBar({ artists, onChange, onInput }) {
               onChange={(event, newValue) => {
                 setValue(newValue);
                 onChange(newValue)
+                // console.log("newValue", newValue);
               }}
               inputValue={inputValue}
               onInputChange={(event, newInputValue) => {

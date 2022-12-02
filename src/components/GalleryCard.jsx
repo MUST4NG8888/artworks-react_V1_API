@@ -13,11 +13,37 @@ import { style } from "@mui/system";
 
 
 const GalleryCard = ({item, clickHandler}) => {
+    // console.log(item);
+    const saveFavorite = async (item) => {
+      console.log('item', item.title);
+      
+      const something = 'something'
+      // let formData = new FormData()
+      // formData.append('title', item.title)
+      // formData.append('year', item.completitionYear)
+      // formData.append('artist', item.artistName)
+      // formData.append('pictureId', item.id)
+      // formData.append('artistId', item.artistId)
+      // for (const value of formData.values()) {
+      //   console.log(value);
+      // }
+    const url = "http://localhost:3333/saveFavorites";
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify(something)
+    })};
+    const deleteFavorite = async (item) => {
+      console.log('Sziasztok Sracok!');
+      };
+  
 
     const [favorite, setFavorite] = React.useState(false);
     const favoriteHandler = () => {
         setFavorite(!favorite);
+        favorite ? deleteFavorite(item) : saveFavorite(item)
       }
+    
+
 
     return (
         <StyledEngineProvider injectFirst>

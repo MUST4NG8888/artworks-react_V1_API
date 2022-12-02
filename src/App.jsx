@@ -12,7 +12,6 @@ function App() {
   const [isOn, setIsOn] = useState(false);
   // const [tags, setTags] = useState();
 
-  console.log(data);
 
   useEffect(() => {
     const init = async () => {
@@ -24,13 +23,14 @@ function App() {
 
   const getArtsByPainterId = async (id) => {
     setIsOn(!isOn);
-   
+    // console.log(id);
     const url = "http://localhost:3333/pba";
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(id),
     });
+
     
     const artistPaintings = await response.json();
     setData(artistPaintings.data);

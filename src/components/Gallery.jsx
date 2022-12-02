@@ -52,7 +52,6 @@ const style = {
 const clickHandler = (item) => {
   setItem(item)
   handleOpen()
-  console.log(item)
 }
 
 const loadHandler = () => {
