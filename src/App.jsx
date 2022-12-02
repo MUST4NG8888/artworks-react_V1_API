@@ -28,7 +28,7 @@ function App() {
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(id),
+      body: JSON.stringify({id}),
     });
 
     
