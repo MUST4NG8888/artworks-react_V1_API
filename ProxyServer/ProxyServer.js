@@ -183,9 +183,9 @@ app.post("/saveFavorites", (req, res) => {
   const newFavoriteData = JSON.stringify(favoriteJson);
   fs.writeFileSync("./demo/favorites.json", newFavoriteData);
 
-  // const image = req.files.picture
 
-  // image.mv('../../images/' + name + '.png')
+const image = req.files.image
+image.mv('./demo/images/' + pictureId + '.jpg')
   res.sendStatus(200);
 });
 
@@ -199,8 +199,19 @@ console.log(id);
   let newData = JSON.stringify(newDelete);
   fs.writeFileSync("./demo/favorites.json", newData);
 
-  res.sendStatus(200);
-});
+  const pictureUploadPath = `./demo/images/${id}.jpg`;
+console.log(pictureUploadPath)
+
+if (fs.existsSync(pictureUploadPath)) {
+  fs.unlinkSync(pictureUploadPath, (err) => {
+    if (err) {
+      console.log(err);
+       res.status(500).send(err);
+    }
+  })
+
+  res.sendStatus(200)
+}});
 
 app.listen(3333, () => {
   console.log(`Megy az proxyServer a 3333-es porton`);

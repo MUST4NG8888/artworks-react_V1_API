@@ -12,29 +12,64 @@ import styles from "./GalleryCard.module.css";
 import { style } from "@mui/system";
 
 const GalleryCard = ({ item, clickHandler }) => {
-  // console.log(item);
   const saveFavorite = async (item) => {
-    console.log("item", item.title);
-   
-    let formData = new FormData();
-    formData.append("title", item.title);
-    formData.append("year", item.completitionYear);
-    formData.append("artist", item.artistName);
-    formData.append("pictureId", item.id);
-    formData.append("artistId", item.artistId);
-    for (const value of formData.values()) {
-      console.log(value);
+    // UTILS
+    var processStatus = function (response) {
+      // process status
+      if (response.status === 200 || response.status === 0) {
+        return Promise.resolve(response);
+      } else {
+        return Promise.reject(new Error("Error loading: " + "harcsamacska"));
+      }
+    };
+
+    var parseBlob = function (response) {
+      return response.blob();
+    };
+
+    var parseJson = function (response) {
+      return response.json();
+    };
+
+    const pictureUrl = item.image;
+
+    // download/upload
+    var downloadFile = function (pictureUrl) {
+      return fetch(pictureUrl).then(processStatus).then(parseBlob);
+    };
+
+    function uploadImageToBackend(blob) {
+      var formData = new FormData();
+      formData.append("title", item.title);
+      formData.append("year", item.completitionYear);
+      formData.append("artist", item.artistName);
+      formData.append("pictureId", item.id);
+      formData.append("artistId", item.artistId);
+      formData.append("image", blob);
+
+      return fetch("http://localhost:3333/saveFavorites", {
+        method: "POST",
+        body: formData,
+      })
+        .then(processStatus)
+        .then(parseJson);
     }
-    const url = "http://localhost:3333/saveFavorites";
-    const response = await fetch(url, {
-      method: "POST",
-      body: formData,
-    });
+
+    // --- ACTION ---
+    var sourceImageUrl = pictureUrl;
+    console.log(
+      'Started downloading image from <a href="' +
+        sourceImageUrl +
+        '">https://www.wikiart.org/ API'
+    );
+
+    downloadFile(sourceImageUrl) // download file from one resource
+      .then(uploadImageToBackend); // upload it to another
+    console.log("Image uploaded to Backend</a>");
   };
 
   const deleteFavorite = async (item) => {
     const pictureId = item.id;
-    console.log(typeof pictureId);
     const url = "http://localhost:3333/deleteFavorites";
     const response = await fetch(url, {
       method: "POST",
